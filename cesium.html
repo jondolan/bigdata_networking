@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Hello World!</title>
+  <script src="Build/Cesium/Cesium.js"></script>
+  <style>
+      @import url(../Build/Cesium/Widgets/widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYThiYjEwMS1kMThmLTRlMGUtYmEwNy1hYmFmOTY5MDY3MTUiLCJpZCI6NTQwMSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MzI1MzY0M30.8C7CAUEropUU1QSRwmvGDxy659doVVgRhYMbzNBOsRY";
+var dates = [new Date(1515546733*1000), new Date(1516172401*1000), new Date(1516690801*1000), new Date(1517295601*1000), new Date(1517900401*1000), new Date(1518505201*1000), new Date(1519110001*1000), new Date(1519714801*1000), new Date(1520319601*1000), new Date(1520924401*1000), new Date(1521529201*1000), new Date(1522134001*1000), new Date(1522738801*1000), new Date(1523343601*1000), new Date(1523948401*1000), new Date(1524553201*1000), new Date(1525158001*1000), new Date(1525762801*1000), new Date(1526367601*1000), new Date(1526972401*1000), new Date(1527577201*1000), new Date(1528182001*1000), new Date(1528786801*1000), new Date(1529391601*1000), new Date(1529996401*1000), new Date(1530601201*1000), new Date(1531232747*1000), new Date(1531810801*1000), new Date(1532415601*1000), new Date(1533020401*1000), new Date(1533680339*1000), new Date(1534230299*1000), new Date(1534835679*1000), new Date(1535440232*1000), new Date(1535684103*1000), new Date(1536495920*1000), new Date(1536883580*1000), new Date(1537488456*1000), new Date(1538117034*1000), new Date(1538753801*1000), new Date(1539302680*1000), new Date(1539907627*1000), new Date(1540512290*1000), new Date(1541117166*1000), new Date(1541722201*1000), new Date(1542326754*1000)];
+var frames = ["1515546733-3041226.png", "1516172401-4491893.png", "1516690801-5089856.png", "1517295601-4241912.png", "1517900401-4299225.png", "1518505201-3174162.png", "1519110001-3530647.png", "1519714801-3809860.png", "1520319601-3734327.png", "1520924401-2857321.png", "1521529201-3327909.png", "1522134001-4311837.png", "1522738801-3304841.png", "1523343601-2988649.png", "1523948401-3084685.png", "1524553201-3154351.png", "1525158001-3119615.png", "1525762801-3181497.png", "1526367601-3379452.png", "1526972401-2922993.png", "1527577201-3599493.png", "1528182001-3849694.png", "1528786801-3026172.png", "1529391601-3454878.png", "1529996401-3395344.png", "1530601201-2900199.png", "1531232747-2881908.png", "1531810801-2842793.png", "1532415601-3247883.png", "1533020401-2727868.png", "1533680339-3021336.png", "1534230299-2786834.png", "1534835679-3057363.png", "1535440232-4156785.png", "1535684103-4390136.png", "1536495920-4437723.png", "1536883580-4178485.png", "1537488456-4689574.png", "1538117034-4756089.png", "1538753801-3953814.png", "1539302680-4539927.png", "1539907627-4162067.png", "1540512290-5539390.png", "1541117166-6002607.png", "1541722201-7137110.png", "1542326754-7275541.png"];
+var active_date = 0;
+var rendered = false;
+    var viewer = new Cesium.Viewer('cesiumContainer');
+    var layers = viewer.scene.imageryLayers;
+
+viewer.scene.sun.show = false;
+viewer.scene.skyBox.destroy();
+
+function render_frame(frame) {
+
+    //layers.removeAll(true);
+    //layers.remove(layers.get(1), false);
+    
+    layer = new Cesium.SingleTileImageryProvider({
+        url : "frames/" + frames[frame],
+        rectangle : Cesium.Rectangle.fromDegrees(-180, -90, 180, 90),
+    });
+    if (layers.get(1)) {
+          new_layer = layers.addImageryProvider(layer, 2);
+          new_layer.alpha = 0.1;
+          old_layer = layers.get(1)
+          old_layer.alpha = 0.5;
+          window.setTimeout(function() { old_layer.alpha = 0.4; new_layer.alpha = 0.2; }, 100);
+          window.setTimeout(function() { old_layer.alpha = 0.3; new_layer.alpha = 0.3; }, 200);
+          window.setTimeout(function() { old_layer.alpha = 0.2; new_layer.alpha = 0.4; }, 300);
+          window.setTimeout(function() { old_layer.alpha = 0.1; new_layer.alpha = 0.5; }, 400);
+          window.setTimeout(function() { layers.remove(old_layer, true); new_layer.alpha = 0.6; }, 500);
+          //layers.lower(new_layer);
+    } else {
+          new_layer = layers.addImageryProvider(layer, 1);
+          new_layer.alpha = 0.6;
+    }
+    //layers.lower(new_layer);
+//    console.log(layers.get(1));
+//console.log("index of");
+    //console.log(layers.indexOf(layer));
+
+}
+
+//render_frame(0);
+
+function start_animation() {
+	viewer.clock.canAnimate = true;
+}
+
+var startDate = Cesium.JulianDate.fromIso8601("2018-01-01");
+var stopDate = Cesium.JulianDate.fromIso8601("2018-11-20");
+
+viewer.clock.currentTime = startDate;
+viewer.timeline.zoomTo(startDate, stopDate);
+viewer.clock.startTime = startDate;
+viewer.clock.stopTime = stopDate;
+viewer.clock.shouldAnimate = true;
+viewer.clock.clockStep = Cesium.ClockStep.TICK_DEPENDENT;
+viewer.clock.multiplier = 7200.0;
+window.setTimeout(start_animation, 1000);
+viewer.clock.onTick.addEventListener(function(clock) {
+	//console.log("tick");
+	//console.log(clock);
+	if (clock.currentTime > clock.stopTime) {
+		clock.currentTime = clock.startTime;
+		active_date = 0;
+		rendered = false;
+
+        }else if (active_date+1 < dates.length && clock.currentTime > Cesium.JulianDate.fromDate(dates[active_date+1])) {
+		active_date++;
+		rendered = false;
+	}
+
+	if (rendered == false) {
+		console.log("render " + active_date);
+		render_frame(active_date);
+		rendered = true;
+	}
+        
+});
+  </script>
+</body>
+</html>
