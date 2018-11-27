@@ -1,0 +1,15 @@
+{
+  "name": "bigdata_networking",
+  "version": "1.0.0",
+  "description": "See Github repo",
+  "main": "index.js",
+  "dependencies": {
+    "cesium": "1.51.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jondolan/bigdata_networking"
+  },
+  "author": "Jon Dolan jondolan@gatech.edu",
+  "license": "MIT"
+}
