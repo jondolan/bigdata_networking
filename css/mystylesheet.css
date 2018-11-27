@@ -11,6 +11,10 @@ a:hover {
 	color: #eaedef;
 }
 
+.container-fluid h3 {
+    font-weight: bold;
+}
+
 .bg-1 {
 	background-image: url(../images/network1.jpg);
 	background-size: cover;
