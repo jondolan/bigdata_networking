@@ -1,10 +1,10 @@
 # Datasets
 datasets/*
-!datasets/README
+!datasets/README.md
 
 # Output frames
 frames/*
-!frames/README
+!frames/README.md
 
 # Logs
 logs
